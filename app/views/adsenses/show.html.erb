@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @adsense.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @adsense.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @adsense.price %>
+</p>
+
+<%= link_to 'Edit', edit_adsense_path(@adsense) %> |
+<%= link_to 'Back', adsenses_path %>

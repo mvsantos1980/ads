@@ -1,0 +1,2 @@
+class Adsense < ApplicationRecord
+end

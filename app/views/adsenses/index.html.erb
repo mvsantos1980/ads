@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Adsenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @adsenses.each do |adsense| %>
+      <tr>
+        <td><%= adsense.title %></td>
+        <td><%= adsense.description %></td>
+        <td><%= adsense.price %></td>
+        <td><%= link_to 'Show', adsense %></td>
+        <td><%= link_to 'Edit', edit_adsense_path(adsense) %></td>
+        <td><%= link_to 'Destroy', adsense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Adsense', new_adsense_path %>
