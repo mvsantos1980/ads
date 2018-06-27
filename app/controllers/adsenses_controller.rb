@@ -69,6 +69,6 @@ class AdsensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def adsense_params
-      params.require(:adsense).permit(:title, :description, :price)
+      params.require(:adsense).permit(:title, :description, :price, :images, :remove_images)
     end
 end

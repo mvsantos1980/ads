@@ -26,6 +26,15 @@
     <%= form.text_field :price, id: :adsense_price %>
   </div>
 
+  <% if(!@adsense.images.file.nil?) %>
+    <%= image_tag(@adsense.images.thumb.url) %>
+    <%= form.check_box :remove_images %> Remover
+  <% end %>
+  <div class="field">
+    <%= form.label :images %>
+    <%= form.file_field :images, id: :adsense_images %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
