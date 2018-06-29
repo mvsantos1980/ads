@@ -1,4 +1,5 @@
 class Adsense < ApplicationRecord
 
-  mount_uploader :images, AdsImageUploader
+  mount_uploaders :images, AdsImageUploader
+  # serialize :images, JSON
 end

@@ -10,6 +10,16 @@ class AdsensesController < ApplicationController
   # GET /adsenses/1
   # GET /adsenses/1.json
   def show
+    @ads = Adsense.find(params[:id])
+
+    if(@ads.view.nil?)
+        @views = 1
+    else
+        @views = @ads.view + 1
+
+    end
+
+    Adsense.all.update(@ads.id, :view => @views)
   end
 
   # GET /adsenses/new
@@ -69,6 +79,6 @@ class AdsensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def adsense_params
-      params.require(:adsense).permit(:title, :description, :price, :images, :remove_images)
+      params.require(:adsense).permit(:title, :description, :price, {images: []}, :remove_images)
     end
 end

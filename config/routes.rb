@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'homes#index'
+  resources :homes
   devise_for :users
   resources :categories
   resources :adsenses

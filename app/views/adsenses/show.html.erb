@@ -14,9 +14,10 @@
   <strong>Price:</strong>
   <%= @adsense.price %>
 </p>
-
-<%= image_tag(@adsense.images.thumb.url, class: "") unless @adsense.images.file.nil? %>
-
+<% @adsense.images.each do |img| %>
+<%= image_tag(img.thumb.url, class: "") unless img.file.nil? %>
+<% end %>
+<p>Este anúncio já foi visualizado <%= @adsense.view %> vezes. </p>
 <%= link_to 'Edit', edit_adsense_path(@adsense) %> |
 <%= link_to 'Back', adsenses_path %>
 
