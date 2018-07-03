@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <div>
+    <%= form.label :category_id %>
+    <%= form.select :category_id, Category.all.order(:description).collect {|cat| [cat.description, cat.id]}, {}, {:class => 'form-control'} %>
+  </div>
+
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, id: :adsense_title %>
@@ -34,7 +39,9 @@
     <% end %>
 
   <% end %>
+
   <%= form.check_box :remove_images %> Remover
+
   <div class="field">
     <%= form.label :images %>
     <%= form.file_field :images, id: :adsense_images, multiple: true %>
