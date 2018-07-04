@@ -20,6 +20,7 @@ class AdsensesController < ApplicationController
     end
 
     Adsense.all.update(@ads.id, :view => @views)
+    @adsFromCat = Adsense.all.where(category_id: @ads.category_id).limit(4)
   end
 
   # GET /adsenses/new

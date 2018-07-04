@@ -1,39 +1,75 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @adsense.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
+<h2 class="text-center text-info">
+  <strong><%= @adsense.title %></strong>
+</h2>
+<h4 class="text-center text-black-50">Em <%= @adsense.category.description %></h4><br>
+<h3 class="text-center text-secondary">
   <%= @adsense.description %>
-</p>
+</h3><br>
 
-<p>
-  <strong>Price:</strong>
-  <%= @adsense.price %>
-</p>
-<% @adsense.images.each do |img| %>
-<%= image_tag(img.thumb.url, class: "") unless img.file.nil? %>
-<% end %>
-<p>Este anúncio já foi visualizado <%= @adsense.view %> vezes. </p>
-<%= link_to 'Edit', edit_adsense_path(@adsense) %> |
-<%= link_to 'Back', adsenses_path %>
+<div class="row">
+  <div class="col-md-6">
+    <p class="text-center text-danger font-weight-bold" style="font-size: 3em">Valor: R<%= number_to_currency @adsense.price %></p>
+    <% unless @adsense.view.nil? %>
+      <p class="text-center">Este anúncio já foi visualizado <%= @adsense.view+1 %> vezes. </p>
+    <% end %>
+    <p class="font-weight-bold">Dados do vendedor: </p>
+<!--    inserir dados do vendedor-->
+  </div>
+  <div class="col-md-6 bg-light">
+    <p class="text-center">Imagens do produto: </p>
+    <div class="galery">
+      <ul class="list-inline">
+        <% @adsense.images.each do |img| %>
+          <li class="list-inline-item"><%= link_to image_tag(img.small.url, class: "img-thumbnail"), img.url, :rel => "lightbox[roadtrip]", :title => @adsense.title unless img.file.nil?%></li>
+        <% end %>
+      </ul>
+    </div>
 
-<!--# ==== Examples-->
-<!--#-->
-<!--#   image_tag("icon")-->
-<!--#   # => <img alt="Icon" src="/assets/icon" />-->
-<!--#   image_tag("icon.png")-->
-<!--#   # => <img alt="Icon" src="/assets/icon.png" />-->
-<!--#   image_tag("icon.png", size: "16x10", alt: "Edit Entry")-->
-<!--#   # => <img src="/assets/icon.png" width="16" height="10" alt="Edit Entry" />-->
-<!--#   image_tag("/icons/icon.gif", size: "16")-->
-<!--#   # => <img src="/icons/icon.gif" width="16" height="16" alt="Icon" />-->
-<!--#   image_tag("/icons/icon.gif", height: '32', width: '32')-->
-<!--#   # => <img alt="Icon" height="32" src="/icons/icon.gif" width="32" />-->
-<!--#   image_tag("/icons/icon.gif", class: "menu_icon")-->
-<!--#   # => <img alt="Icon" class="menu_icon" src="/icons/icon.gif" />-->
-<!--#   image_tag("/icons/icon.gif", data: { title: 'Rails Application' })-->
-<!--#   # => <img data-title="Rails Application" src="/icons/icon.gif" />-->
+  </div>
+
+</div>
+
+
+
+<!--testar para mostrar apenas se for do usuário-->
+<%= link_to 'Editar', edit_adsense_path(@adsense), :class => "btn btn-outline-warning" %>
+<%= link_to 'Ver meus anúncios', adsenses_path,  :class => "btn btn-outline-info" %>
+<br>
+<span style="padding: 25px;"></span>
+<div class="row bg-light">
+  <div class="col-12">
+    <h4 class="text-black-50">::Produtos relacionados::</h4>
+  </div>
+  <% @adsFromCat.each do |adsCat| %>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <span class="col-7"><%= adsCat.title %></span>
+            <span class="badge badge-pill col-5" style="font-size: 0.6em"><small>publicado</small> <%=formatar_data adsCat.created_at  %></span>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8">
+              <p><%= adsCat.description %></p>
+              <p>R<%= number_to_currency adsCat.price %></p>
+            </div>
+            <div class="col-4">
+              <% adsCat.images.each do |img| %>
+                <%= image_tag(img.thumb.url, :class => "img-responsive") %>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+        <a class="card-footer btn btn-outline-secondary" href="<%= adsenses_path %>/<%= adsCat.id %>">
+          <p class="text-center">::Mais Informações::</p>
+        </a>
+      </div>
+    </div>
+  <% end %>
+</div>
