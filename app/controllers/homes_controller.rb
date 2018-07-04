@@ -4,7 +4,8 @@ class HomesController < ApplicationController
   # GET /homes
   # GET /homes.json
   def index
-    @homes = Home.all
+    @adsOrderViewAndTitle = Adsense.all.order("view DESC", "title ASC").limit(8)
+    @adsLastAdd = Adsense.all.order("created_at DESC").limit(8)
   end
 
   # GET /homes/1
