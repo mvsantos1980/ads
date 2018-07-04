@@ -9,6 +9,41 @@
   </div>
 
   <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, autocomplete: "address" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :number %><br />
+    <%= f.text_field :number, autocomplete: "number" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city, autocomplete: "city" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :estate %><br />
+    <%= f.text_field :estate, autocomplete: "estate" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cep %><br />
+    <%= f.text_field :cep, autocomplete: "cep" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone, autocomplete: "phone" %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>

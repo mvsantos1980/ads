@@ -1,10 +1,144 @@
 <div class="row">
-  <div class="col-3"></div>
-  <div class="col-6">
+<!--  <div class="col-3"></div>-->
+  <div class="col-12">
     <h1 class="text-secondary text-center">Classificados</h1>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <%= form_tag("/homes/index", method: "post", class: "form-inline") do %>
+          <div class="form-group mb-2">
+            <%= text_field_tag :search_term_title, '', maxlength: 15, size: 28, class: "form-control", placeholder: "Bucar anúncio por título" %>
+            <%= submit_tag "Buscar", :class => 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-6">
+        <%= form_tag("/homes/index", method: "post", class: "form-inline") do %>
+          <div class="form-group mb-2">
+            <%= text_field_tag :search_term_description, '', maxlength: 15, size: 28, class: "form-control", placeholder: "Bucar anúncio por descrição" %>
+            <%= submit_tag "Buscar", :class => 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div class="col-3"></div>
+<!--<div class="col-3"></div>-->
 </div>
+
+<!--aparece quando filtrado por gategoria-->
+
+<% if !@adsByCat.nil? %>
+  <div class="row">
+    <h3 class="text-danger text-center col-12 bg-light">Anúncios da Categoria <%= @catSelect.description %></h3>
+    <div class="row">
+      <% @adsByCat.each do |ads| %>
+        <div class="col"  style="padding-bottom: 10px">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <span class="col-8"><%= ads.title %></span>
+                <span class="badge badge-pill col-4"><small>Views</small> <%= ads.view  %></span>
+              </div>
+
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <p><%= ads.description %></p>
+                  <p>R<%= number_to_currency ads.price %></p>
+                </div>
+                <div class="col-4">
+                  <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") %>
+                </div>
+              </div>
+
+            </div>
+            <a class="card-footer btn btn-outline-secondary" href="<%= adsenses_path%>/<%= ads.id %>">
+              <p class="text-center">::Mais Informações::</p>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!--mostra resultado da busca por título-->
+
+<% if !@adsFindTitle.nil? %>
+  <div class="row">
+    <h3 class="text-danger text-center col-12 bg-light">Resultados da busca por títulos que contenham "<%= @term %>"</h3>
+    <div class="row">
+      <% @adsFindTitle.each do |ads| %>
+        <div class="col"  style="padding-bottom: 10px">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <span class="col-8"><%= ads.title %></span>
+                <span class="badge badge-pill col-4"><small>Views</small> <%= ads.view  %></span>
+              </div>
+
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <p><%= ads.description %></p>
+                  <p>R<%= number_to_currency ads.price %></p>
+                </div>
+                <div class="col-4">
+                  <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") %>
+                </div>
+              </div>
+
+            </div>
+            <a class="card-footer btn btn-outline-secondary" href="<%= adsenses_path%>/<%= ads.id %>">
+              <p class="text-center">::Mais Informações::</p>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+<!--mostra resultado da busca por descrição-->
+
+<% if !@adsFindDesc.nil? %>
+  <div class="row">
+    <h3 class="text-danger text-center col-12 bg-light">Resultados da busca por títulos que contenham "<%= @term %>"</h3>
+    <div class="row">
+      <% @adsFindDesc.each do |ads| %>
+        <div class="col"  style="padding-bottom: 10px">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <span class="col-8"><%= ads.title %></span>
+                <span class="badge badge-pill col-4"><small>Views</small> <%= ads.view  %></span>
+              </div>
+
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <p><%= ads.description %></p>
+                  <p>R<%= number_to_currency ads.price %></p>
+                </div>
+                <div class="col-4">
+                  <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") %>
+                </div>
+              </div>
+
+            </div>
+            <a class="card-footer btn btn-outline-secondary" href="<%= adsenses_path%>/<%= ads.id %>">
+              <p class="text-center">::Mais Informações::</p>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
   <h3 class="text-black-50 text-center col-12 bg-light">Anúncios mais visitados</h3>
@@ -42,10 +176,10 @@
 
 <div class="row bg-light" style="margin:30px 0">
   <h4 class="text-black-50 text-center col-12 ">::Categorias::</h4>
-  <% Category.all.each do |cat| %>
+  <% Category.all.order(:description).each do |cat| %>
     <div class="col-3" style="padding: 15px 0">
       <p class="text-center font-weight-bold hover-text" style="font-size: 3em; color: #b9bbbe">
-        <%= cat.description %>
+        <%= link_to cat.description, homes_path(category_id: cat.id), :class => "link" %>
       </p>
     </div>
   <% end %>

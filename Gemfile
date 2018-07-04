@@ -60,3 +60,4 @@ gem 'mini_magick'
 
 # Autenticacao
 gem 'devise'
+gem 'cancancan'

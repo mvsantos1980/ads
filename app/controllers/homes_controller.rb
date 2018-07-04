@@ -6,6 +6,15 @@ class HomesController < ApplicationController
   def index
     @adsOrderViewAndTitle = Adsense.all.order("view DESC", "title ASC").limit(8)
     @adsLastAdd = Adsense.all.order("created_at DESC").limit(8)
+    @adsByCat = nil unless !params[:category_id].blank?
+    @adsByCat = Adsense.all.where("category_id = :cat", {cat: params[:category_id]}) unless params[:category_id].blank?
+    @catSelect = Category.find params[:category_id] unless params[:category_id].blank?
+    @adsFindTitle = nil unless !params[:search_term_title].blank?
+    @adsFindTitle = Adsense.all.where("UPPER(adsenses.title) LIKE ?" , "%#{params[:search_term_title].to_s.upcase}%") unless params[:search_term_title].blank?
+    @adsFindDesc = nil unless !params[:search_term_description].blank?
+    @adsFindDesc = Adsense.all.where("UPPER(adsenses.description) LIKE ?" , "%#{params[:search_term_description].to_s.upcase}%") unless params[:search_term_description].blank?
+    @term = params[:search_term_title] unless params[:search_term_title].blank?
+    @term = params[:search_term_description] unless params[:search_term_description].blank?
   end
 
   # GET /homes/1

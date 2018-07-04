@@ -1,10 +1,13 @@
 class AdsensesController < ApplicationController
   before_action :set_adsense, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, :except => [:show]
+
+  load_and_authorize_resource :except => [:show]
 
   # GET /adsenses
   # GET /adsenses.json
   def index
-    @adsenses = Adsense.all
+    @adsenses = Adsense.all.where("user_id = ?", current_user.id)
   end
 
   # GET /adsenses/1
@@ -21,6 +24,8 @@ class AdsensesController < ApplicationController
 
     Adsense.all.update(@ads.id, :view => @views)
     @adsFromCat = Adsense.all.where(category_id: @ads.category_id).limit(4)
+
+    @vendedor = User.find(@ads.user_id)
   end
 
   # GET /adsenses/new

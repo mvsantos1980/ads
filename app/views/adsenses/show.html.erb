@@ -15,7 +15,11 @@
       <p class="text-center">Este anúncio já foi visualizado <%= @adsense.view+1 %> vezes. </p>
     <% end %>
     <p class="font-weight-bold">Dados do vendedor: </p>
-<!--    inserir dados do vendedor-->
+    <p class="font-weight-bold"><small>Nome: </small> <%= @vendedor.name %></p>
+    <p class="font-weight-bold"><small>E-mail: </small> <%= @vendedor.email %></p>
+    <p class="font-weight-bold"><small>Endereço: </small> <%= @vendedor.address%>, <%= @vendedor.number %></p>
+    <p class="font-weight-bold"><small>Cidade: </small> <%= @vendedor.city %>/<%= @vendedor.estate %> <small>CEP: </small> <%= @vendedor.cep %></p>
+    <p class="font-weight-bold text-info" style="font-size: 2em"><small>Telefone: </small><%= @vendedor.phone %></p>
   </div>
   <div class="col-md-6 bg-light">
     <p class="text-center">Imagens do produto: </p>
@@ -33,9 +37,10 @@
 
 
 
-<!--testar para mostrar apenas se for do usuário-->
-<%= link_to 'Editar', edit_adsense_path(@adsense), :class => "btn btn-outline-warning" %>
-<%= link_to 'Ver meus anúncios', adsenses_path,  :class => "btn btn-outline-info" %>
+<% if can? :update, @adsense %>
+  <%= link_to 'Editar', edit_adsense_path(@adsense), :class => "btn btn-outline-warning" %>
+  <%= link_to 'Ver meus anúncios', adsenses_path,  :class => "btn btn-outline-info" %>
+<% end %>
 <br>
 <span style="padding: 25px;"></span>
 <div class="row bg-light">
