@@ -160,7 +160,7 @@
                 <p>R<%= number_to_currency ads.price %></p>
               </div>
               <div class="col-4">
-                <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") %>
+                <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") unless ads.images[0].nil? %>
               </div>
             </div>
 
@@ -205,7 +205,7 @@
                 <p>R<%= number_to_currency ads.price %></p>
               </div>
               <div class="col-4">
-                <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") %>
+                <%= image_tag(ads.images[0].thumb.url, :class => "img-responsive") unless ads.images[0].nil? %>
               </div>
             </div>
 
